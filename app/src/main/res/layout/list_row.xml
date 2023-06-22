@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/list_image"
+        android:layout_width="118dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/list_name"
+        android:layout_width="76dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="16dp"
+        android:text="Name"
+        app:layout_constraintEnd_toStartOf="@+id/list_change"
+        app:layout_constraintStart_toEndOf="@+id/list_image"
+        app:layout_constraintTop_toTopOf="@+id/list_image" />
+
+    <TextView
+        android:id="@+id/list_value"
+        android:layout_width="78dp"
+        android:layout_height="22dp"
+        android:text="Value"
+        app:layout_constraintEnd_toStartOf="@+id/list_change"
+        app:layout_constraintStart_toEndOf="@+id/list_image"
+        app:layout_constraintTop_toBottomOf="@+id/list_name" />
+
+    <TextView
+        android:id="@+id/list_change"
+        android:layout_width="128dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="16dp"
+        android:text="Change %"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

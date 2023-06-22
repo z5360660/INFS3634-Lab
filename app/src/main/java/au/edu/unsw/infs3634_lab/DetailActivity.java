@@ -13,7 +13,7 @@ import android.widget.TextView;
 import au.edu.unsw.infs3634_lab.api.Crypto;
 
 public class DetailActivity extends AppCompatActivity {
-    public static final String INTENT_MESSAGE = "intent_message";
+    public static final String INTENT_MESSAGE = "Symbol";
     private static final String TAG= "Detail-Activity";
     private TextView detailMessage;
     private Button btnOpenUrl;
@@ -42,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
             TextView marketCap = findViewById(R.id.CryptoMarketCap);
             ImageView searchButton = findViewById(R.id.SearchButton);
 
-            Crypto crypto = Crypto.getBySymbol(message);
+            Crypto crypto = Crypto.getBySymbol("Symbol");
             if (crypto != null) {
                 name.setText((crypto.getName()));
                 symbol.setText(crypto.getSymbol());
