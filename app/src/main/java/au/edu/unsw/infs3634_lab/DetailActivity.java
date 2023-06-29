@@ -42,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
             TextView marketCap = findViewById(R.id.CryptoMarketCap);
             ImageView searchButton = findViewById(R.id.SearchButton);
 
-            Crypto crypto = Crypto.getBySymbol("Symbol");
+            Crypto crypto = Crypto.getBySymbol(message);
             if (crypto != null) {
                 name.setText((crypto.getName()));
                 symbol.setText(crypto.getSymbol());
@@ -57,7 +57,7 @@ public class DetailActivity extends AppCompatActivity {
             searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent searchCrypto = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=Binance+Coin%0D%0A&rlz=1C5CHFA_enAU931AU936&sxsrf=APwXEdePdbS7ZzfKC12rDpJhp4yQTH6zpA%3A1686802807597&ei=d5GKZI6LJJSJhwOFmY7gAw&ved=0ahUKEwjOopyRtsT_AhWUxGEKHYWMAzwQ4dUDCA8&uact=5&oq=Binance+Coin%0D%0A&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzIKCAAQRxDWBBCwAzIKCAAQRxDWBBCwAzIKCAAQRxDWBBCwAzIKCAAQRxDWBBCwAzIKCAAQRxDWBBCwAzIKCAAQRxDWBBCwAzIKCAAQRxDWBBCwAzIKCAAQRxDWBBCwAzIKCAAQigUQsAMQQzIKCAAQigUQsAMQQ0oECEEYAFCnAlinAmDHA2gDcAF4AIABAIgBAJIBAJgBAKABAqABAcABAcgBCg&sclient=gws-wiz-serp"));
+                    Intent searchCrypto = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q"));
                             startActivity(searchCrypto);
                 }
             });

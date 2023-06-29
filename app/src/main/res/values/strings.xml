@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Will-Lab</string>
     <string name="welcome_msg">oh shmeeee</string>
+    <string name="menu_title_sort">Sort</string>
+    <string name="menu_title_search">Search</string>
+    <string name="menu_title_name">Name</string>
+    <string name="menu_title_price">Price</string>
+
 </resources>
