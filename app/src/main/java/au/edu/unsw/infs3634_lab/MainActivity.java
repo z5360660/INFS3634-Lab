@@ -13,7 +13,10 @@ import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import au.edu.unsw.infs3634_lab.api.Crypto;
+import au.edu.unsw.infs3634_lab.api.Response;
 
 public class MainActivity extends AppCompatActivity implements CryptoAdapter.ClickListener {
 
@@ -29,9 +32,15 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Cli
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         cryptoRecyclerView.setLayoutManager(layoutManager);
 
-        adapter = new CryptoAdapter(Crypto.getCryptoCurrencies(), MainActivity.this);
+        Gson gson = new Gson();
+
+        Response response = gson.fromJson(Response.JsonString, Response.class);
+        List<Datum> data = response.getData();
+
+        adapter = new CryptoAdapter(data , MainActivity.this);
         cryptoRecyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void onRowCLick(String symbol) {

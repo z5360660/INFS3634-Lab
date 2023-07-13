@@ -16,16 +16,18 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import au.edu.unsw.infs3634_lab.api.Crypto;
+import au.edu.unsw.infs3634_lab.api.Datum;
 
 public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoViewHolder> implements Filterable {
 
-    ArrayList<Crypto> cryptoList;
-    ArrayList<Crypto> localDataListFiltered;
+    List<Datum> cryptoList;
+    List<Datum> localDataListFiltered;
     ClickListener mListener;
 
-    public CryptoAdapter (ArrayList<Crypto> cryptos, ClickListener listener){
+    public CryptoAdapter (List<Datum> cryptos, ClickListener listener){
         cryptoList = cryptos;
         localDataListFiltered = cryptoList;
         mListener = listener;
