@@ -11,14 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import au.edu.unsw.infs3634_lab.api.Crypto;
 import au.edu.unsw.infs3634_lab.api.Datum;
 
 public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoViewHolder> implements Filterable {
@@ -35,9 +32,9 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoView
     }
 
     public void Sort(int sortBy) {
-        Collections.sort(localDataListFiltered, new Comparator<Crypto>() {
+        Collections.sort(localDataListFiltered, new Comparator<Datum>() {
             @Override
-            public int compare(Crypto c1, Crypto c2) {
+            public int compare(Datum c1, Datum c2) {
                 if (sortBy == 1) {
                 return c1.getName().toLowerCase().compareTo(c2.getName().toLowerCase());
 
@@ -66,9 +63,16 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoView
         return new CryptoViewHolder(view, mListener);
     }
 
+    public void SetData(List<Datum> crytoFromAPI) {
+        cryptoList = crytoFromAPI;
+        localDataListFiltered = crytoFromAPI;
+
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull CryptoViewHolder holder, int position) {
-        Crypto cryptoItem = localDataListFiltered.get(position);
+        Datum cryptoItem = localDataListFiltered.get(position);
 
         holder.list_name.setText(cryptoItem.getName());
         holder.list_value.setText("$" + cryptoItem.getPriceUsd());
@@ -95,8 +99,8 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoView
                     localDataListFiltered = cryptoList;
                 }
                 else {
-                    ArrayList<Crypto> tempArray = new ArrayList<>();
-                    for (Crypto item: cryptoList) {
+                    ArrayList<Datum> tempArray = new ArrayList<>();
+                    for (Datum item: cryptoList) {
                         if (item.getName().toLowerCase().contains(searchQuery)) {
                             tempArray.add(item);
                         }

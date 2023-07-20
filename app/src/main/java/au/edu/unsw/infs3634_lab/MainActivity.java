@@ -15,8 +15,19 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import au.edu.unsw.infs3634_lab.api.Crypto;
+import au.edu.unsw.infs3634_lab.api.CryptoService;
+import au.edu.unsw.infs3634_lab.api.Datum;
 import au.edu.unsw.infs3634_lab.api.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements CryptoAdapter.ClickListener {
 
@@ -32,13 +43,30 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Cli
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         cryptoRecyclerView.setLayoutManager(layoutManager);
 
-        Gson gson = new Gson();
 
-        Response response = gson.fromJson(Response.JsonString, Response.class);
-        List<Datum> data = response.getData();
-
-        adapter = new CryptoAdapter(data , MainActivity.this);
+        adapter = new CryptoAdapter(new ArrayList<>(), MainActivity.this);
         cryptoRecyclerView.setAdapter(adapter);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.coinlore.net/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        CryptoService service = retrofit.create(CryptoService.class);
+        Call<Response> responseCall = service.GetCryptos();
+
+       responseCall.enqueue(new Callback<Response>() {
+           @Override
+           public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+               adapter.SetData(response.body().getData());
+
+           }
+
+           @Override
+           public void onFailure(Call<Response> call, Throwable t) {
+
+           }
+       });
     }
 
 
@@ -50,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Cli
 
         startActivity(toDetail);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
