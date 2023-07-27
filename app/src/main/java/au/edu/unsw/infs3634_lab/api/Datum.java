@@ -1,14 +1,23 @@
 
 package au.edu.unsw.infs3634_lab.api;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Generated("jsonschema2pojo")
+
+
+
+@Entity
 public class Datum implements Serializable
 {
+    @PrimaryKey
+    @NonNull
 
     @SerializedName("id")
     @Expose

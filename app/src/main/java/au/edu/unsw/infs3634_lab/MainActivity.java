@@ -3,6 +3,7 @@ package au.edu.unsw.infs3634_lab;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +20,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import au.edu.unsw.infs3634_lab.api.Crypto;
 import au.edu.unsw.infs3634_lab.api.CryptoService;
 import au.edu.unsw.infs3634_lab.api.Datum;
 import au.edu.unsw.infs3634_lab.api.Response;
+import au.edu.unsw.infs3634_lab.api.db.CryptoDB;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -32,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements CryptoAdapter.ClickListener {
 
     CryptoAdapter adapter;
+    CryptoDB mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,15 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Cli
         adapter = new CryptoAdapter(new ArrayList<>(), MainActivity.this);
         cryptoRecyclerView.setAdapter(adapter);
 
+        mDB = Room.databaseBuilder(getApplicationContext(), CryptoDB.class, "crypto-database-1").build();
+        Executors.newSingleThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                List<Datum> allCryptoStored = mDB.cryptoDAO().GetAllCryptos();
+                adapter.setData(allCryptoStored);
+            }
+        });
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.coinlore.net/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,7 +72,17 @@ public class MainActivity extends AppCompatActivity implements CryptoAdapter.Cli
        responseCall.enqueue(new Callback<Response>() {
            @Override
            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+               List<Datum> cryptoObjects = response.body().getData();
                adapter.SetData(response.body().getData());
+
+               Executors.newSingleThreadExecutor().execute(new Runnable() {
+                   @Override
+                   public void run() {
+                       List<Datum> allCryptoStored = mDB.cryptoDAO().GetAllCryptos();
+                       mDB.cryptoDAO().DeleteAllCryptos(allCryptoStored.toArray(new Datum[0]));
+                       mDB.cryptoDAO().InsertAllCryptos(cryptoObjects.toArray(new Datum[0]));
+                   }
+               });
 
            }
 

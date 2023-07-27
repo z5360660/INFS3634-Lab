@@ -123,6 +123,9 @@ public class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoView
         };
     }
 
+    public void setData(List<Datum> allCryptoStored) {
+    }
+
     public interface ClickListener {
         void onRowCLick(String symbol);
     }
