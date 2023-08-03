@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "71986818554",
+    "project_id": "infs3634-lab-4f1d9",
+    "storage_bucket": "infs3634-lab-4f1d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71986818554:android:f9953bd847338e71b0c843",
+        "android_client_info": {
+          "package_name": "au.edu.unsw.infs3634_lab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71986818554-dhe4bv6a6pq88fvho4s87f4daknnhsp5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAT3lDBfgzi-la4U7v-0NfAHbGV2SEGaCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71986818554-dhe4bv6a6pq88fvho4s87f4daknnhsp5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
