@@ -9,8 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -48,6 +55,13 @@ public class DetailActivity extends AppCompatActivity {
         TextView volume = findViewById(R.id.CryptoVolume24h);
         TextView marketCap = findViewById(R.id.CryptoMarketCap);
         ImageView searchButton = findViewById(R.id.SearchButton);
+        CheckBox FavouriteCheckbox = findViewById(R.id.FavouriteCheckbox);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(currentUser.getUid());
+
 
 
         // Get the intent that started this activity and extract the string
@@ -81,6 +95,23 @@ public class DetailActivity extends AppCompatActivity {
                                 public void onClick(View view) {
                                     Intent searchCrypto = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q="));
                                     startActivity(searchCrypto);
+                                }
+                            });
+
+                            FavouriteCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                    if (b) {
+
+
+
+                                        myRef.setValue(crypto.getSymbol());
+                                    } else {
+
+                                        myRef.setValue("");
+
+                                    }
+
                                 }
                             });
 
