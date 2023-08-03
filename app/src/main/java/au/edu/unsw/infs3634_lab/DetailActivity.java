@@ -1,5 +1,6 @@
 package au.edu.unsw.infs3634_lab;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -16,8 +17,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -73,6 +77,9 @@ public class DetailActivity extends AppCompatActivity {
 
         if (!message1.trim().isEmpty() && message1 != null) {
 
+            // Read from the database
+
+
             Executors.newSingleThreadExecutor().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -95,6 +102,28 @@ public class DetailActivity extends AppCompatActivity {
                                 public void onClick(View view) {
                                     Intent searchCrypto = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q="));
                                     startActivity(searchCrypto);
+                                }
+                            });
+                            myRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String value = dataSnapshot.getValue(String.class);
+                                    Log.d(TAG, "Value is: " + value);
+
+                                    if (value != null) {
+                                        if (value.equals(crypto.getSymbol())) {
+                                            FavouriteCheckbox.setChecked(true);
+                                        } else {
+                                            FavouriteCheckbox.setChecked(false);
+
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    // Failed to read value
+                                    Log.w(TAG, "Failed to read value.", error.toException());
                                 }
                             });
 
